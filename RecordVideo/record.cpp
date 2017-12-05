@@ -1,6 +1,6 @@
 #include <iostream>
 #include <opencv2/opencv.hpp>
-#include "record.h"
+#include "record.hpp"
 
 using namespace std;
 using namespace cv;
@@ -33,7 +33,6 @@ void record_video(){
         if(frames > frame_cap)
             break;
         frames++;
-        cout << frames << endl;
     }
 
     cap.release();
@@ -41,7 +40,7 @@ void record_video(){
     destroyAllWindows();
 }
 
-void play_video(string title){
+void play_video(const char* title){
     VideoCapture cap(title);
     int fps = cap.get(CAP_PROP_FPS);
     int delay = 1000/fps;
