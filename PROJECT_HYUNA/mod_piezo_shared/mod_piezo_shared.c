@@ -4,10 +4,10 @@
 #include <fcntl.h>
 #include <signal.h>
 
-#include "mod_sw_drv_shared.h"
+#include "mod_piezo_shared.h"
 
 #define SIG_CALLBACK 44
-#define NODE_NAME "/dev/mod_sw_drv"
+#define NODE_NAME "/dev/mod_piezo"
 
 int fd;
 static void (*g_pfn_callback)(int);

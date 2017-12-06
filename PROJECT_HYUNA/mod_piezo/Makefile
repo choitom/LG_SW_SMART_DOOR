@@ -8,7 +8,6 @@ endif
 
 default:
 	make -C $(KDIR) M=$(PWD) modules
-
 clean :	
 	rm -rf *.ko
 	rm -rf *.mod.*
