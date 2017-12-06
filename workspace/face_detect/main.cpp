@@ -10,10 +10,14 @@ using namespace std;
 using namespace cv;
 using namespace cv::face;
 
+static int video_num = 0;
 
 int main(int argc, const char** argv)
 {
-	int person;
+    record_video(video_num++);
+    play_video("visitor_recording0.avi");
+
+    int person;
 	person = faceRecognition();
 	cout << "Person: " << person << endl;
 }

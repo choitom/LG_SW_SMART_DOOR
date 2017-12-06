@@ -11,6 +11,8 @@ extern "C" {
 #include <vector>
 
 extern int faceRecognition();
+extern void record_video(int num);
+extern void play_video(const char *title);
 extern void  
 detectAndDisplay(cv::Mat &frame, 
 cv::CascadeClassifier &face_cascade, std::vector<int> & temp_out);
