@@ -1,1 +1,0 @@
-cmd_/home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/el_piezo/el_piezo.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/el_piezo/el_piezo.ko /home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/el_piezo/el_piezo.o /home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/el_piezo/el_piezo.mod.o ;  true
