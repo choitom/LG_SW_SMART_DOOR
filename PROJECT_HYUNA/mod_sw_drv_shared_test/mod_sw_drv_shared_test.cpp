@@ -6,7 +6,20 @@
 
 #define SIG_CALLBACK 44
 #define NODE_NAME "/dev/mod_sw_drv"
-extern "C"{
+
+
+static int video_num = 0;
+
+        
+
+
+
+
+
+
+
+
+//extern "C"{
 int set_callback(void (*pfn_callback)(int));
 int fd;
 static void (*g_pfn_callback)(int);
@@ -42,7 +55,7 @@ int set_callback(void (*pfn_callback)(int))
 	}
 	return ret;
 }
-}
+//}
 
 void sw_callback(int sw){
 
@@ -55,9 +68,14 @@ int main(int argc, char * argv[])
 	printf("hello main\n");
 	set_callback(sw_callback);
 
+    	int person = faceRecognition();
+        printf("The result is %dth person\n", person);
+
+    	record_video(video_num++);
+    	play_video("visitor_recording0.avi");
 	while (1) 
-{
-}
+	{
+	}
 //		pause();
 
 	return 0;

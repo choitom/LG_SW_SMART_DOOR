@@ -1,7 +1,7 @@
 APP  = $(notdir $(PWD))
 
 default:
-	arm-linux-gnueabihf-g++ -o $(APP) $(APP).cpp
+	arm-linux-gnueabihf-gcc -o $(APP) $(APP).c
 clean :	
 	rm -rf $(APP)
 
