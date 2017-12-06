@@ -9,6 +9,7 @@
 #include <sys/ioctl.h>
 #include "/usr/include/linux/i2c-dev.h"
 #include "people.h" 
+#include "speaker.h"
 
 #define PIEZO_NODE_NAME         "mod_piezo"
 
@@ -117,11 +118,10 @@ int main(void) {
 		if(person == TAEHO 
 				|| person == TOM
 				|| person == HYUNA) { // if host, open door
-            printf("Hello\n");
-            //alert_sound();
+            welcome("Tom");
 		}
 		else{ // else record
-            printf("Sorry\n");
+            unwelcome();
             record_video(video_num++);
 			play_video("visitor_recording0.avi");
 		}
