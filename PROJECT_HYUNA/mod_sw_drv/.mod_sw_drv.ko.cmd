@@ -1,0 +1,1 @@
+cmd_/home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/mod_sw_drv/mod_sw_drv.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/mod_sw_drv/mod_sw_drv.ko /home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/mod_sw_drv/mod_sw_drv.o /home/ubuntu/LG_SW_SMART_DOOR/PROJECT_HYUNA/mod_sw_drv/mod_sw_drv.mod.o ;  true
