@@ -1,1 +1,0 @@
-cmd_/home/ubuntu/sh/mod_sw_drv/mod_sw_drv.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/ubuntu/sh/mod_sw_drv/mod_sw_drv.ko /home/ubuntu/sh/mod_sw_drv/mod_sw_drv.o /home/ubuntu/sh/mod_sw_drv/mod_sw_drv.mod.o ;  true
