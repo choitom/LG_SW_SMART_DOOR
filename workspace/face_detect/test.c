@@ -8,7 +8,6 @@
 #include <string.h>
 #include <sys/ioctl.h>
 #include "/usr/include/linux/i2c-dev.h"
-#include "mod_piezo_shared.h"
 #include "people.h" 
 
 #define PIEZO_NODE_NAME         "mod_piezo"
@@ -102,31 +101,28 @@ int set_callback(void (*pfn_callback)(int))
 void sw_callback(int sw){
 
 	printf("sw = %d\n", sw);
-	//alert_sound();
+	alert_sound();
 	person = faceRecognition();
 	printf("end alert_sount\n");
 }
 
 
 int main(void) {
-	int person;
 	set_callback(sw_callback);
-	//person = faceRecognition();
-	//printf("The result is %dth person\n", person);
-	//record_video(video_num++);
-	//play_video("visitor_recording0.avi");
 
 	while(1){
 		// if person is not defined
-		if(person < 0) break;
+		if(person < 0) continue;
 
 		if(person == TAEHO 
 				|| person == TOM
 				|| person == HYUNA) { // if host, open door
-			alert_sound();
+            printf("Hello\n");
+            //alert_sound();
 		}
 		else{ // else record
-			record_video(video_num++);
+            printf("Sorry\n");
+            record_video(video_num++);
 			play_video("visitor_recording0.avi");
 		}
 		person = -1;
