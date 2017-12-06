@@ -1,4 +1,5 @@
 #include "smartdoor.h"
+#include "people.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -64,6 +65,8 @@ int faceRecognition()
 	int idx = -1;
 	for(int i = 0; i < 10; ++i) {
 		//cout << "result: " << result << "\t vot[" << i << "]: " << vot[i] << endl;
+		if (i == CHEON) break; // magic parameter
+
 		if (result < vot[i]) {
 			result = vot[i];
 			idx = i;

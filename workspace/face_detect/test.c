@@ -9,6 +9,7 @@
 #include <sys/ioctl.h>
 #include "/usr/include/linux/i2c-dev.h"
 #include "mod_piezo_shared.h"
+#include "people.h" 
 
 #define PIEZO_NODE_NAME         "mod_piezo"
 
@@ -25,32 +26,32 @@ int person = -1;
 int fd_piezo;
 void piezo_on(void)
 {
-        fd_piezo = open(NODE_NAME2, O_RDWR);
-        if(fd_piezo < 0)
-                printf("piezo open failed\n");
+	fd_piezo = open(NODE_NAME2, O_RDWR);
+	if(fd_piezo < 0)
+		printf("piezo open failed\n");
 }
 
 void piezo_off()
 {
-        close(fd_piezo);
+	close(fd_piezo);
 }
 
 void alert_sound()
 {
-        int i;
-        int alert_data=261;
+	int i;
+	int alert_data=261;
 
-        piezo_on();
+	piezo_on();
 
-        for (i=0; i<100 ; i++) {
-                alert_data += i;
-                write(fd_piezo, &alert_data, sizeof(alert_data));
-                usleep(10*1000);
-        }
+	for (i=0; i<100 ; i++) {
+		alert_data += i;
+		write(fd_piezo, &alert_data, sizeof(alert_data));
+		usleep(10*1000);
+	}
 
-   //	  alert_data = 0;
-   //     write(fd_piezo, &alert_data, sizeof(alert_data));
-         piezo_off();
+	//	  alert_data = 0;
+	//     write(fd_piezo, &alert_data, sizeof(alert_data));
+	piezo_off();
 }
 
 
@@ -74,7 +75,7 @@ void __attribute__((destructor)) exit_callback(void)
 	}
 	if(fd_piezo > 0){
 		piezo_off();	
-}
+	}
 }
 static void receive_signal(int n, siginfo_t *info, void *unused)
 {
@@ -101,29 +102,34 @@ int set_callback(void (*pfn_callback)(int))
 void sw_callback(int sw){
 
 	printf("sw = %d\n", sw);
-	alert_sound();
-    person = faceRecognition();
-    printf("end alert_sount\n");
+	//alert_sound();
+	person = faceRecognition();
+	printf("end alert_sount\n");
 }
 
 
 int main(void) {
 	int person;
-    set_callback(sw_callback);
-    //person = faceRecognition();
+	set_callback(sw_callback);
+	//person = faceRecognition();
 	//printf("The result is %dth person\n", person);
 	//record_video(video_num++);
 	//play_video("visitor_recording0.avi");
-    
-    while(1){
-        // if person is owner
-        if(person >= 0){
-            
-        }
 
-        // else record
-        else{
-        }
-    }
+	while(1){
+		// if person is not defined
+		if(person < 0) break;
+
+		if(person == TAEHO 
+				|| person == TOM
+				|| person == HYUNA) { // if host, open door
+			alert_sound();
+		}
+		else{ // else record
+			record_video(video_num++);
+			play_video("visitor_recording0.avi");
+		}
+		person = -1;
+	}
 	return 0;
 }
