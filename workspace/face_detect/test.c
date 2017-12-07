@@ -25,13 +25,13 @@ void door_ctl(int cmd)
 	switch(cmd)
 	{
 		case OPEN:
-			printf("open the door\n");
+			//printf("open the door\n");
 			softPwmWrite(SERVO, 24);
 			usleep(200000);
 			softPwmWrite(SERVO, 0);
 			break;
 		case CLOSE:
-			printf("close the door\n");
+			//printf("close the door\n");
 			softPwmWrite(SERVO, 5);
 			usleep(200000);
 			softPwmWrite(SERVO, 0);
@@ -42,29 +42,18 @@ void door_ctl(int cmd)
 	}
 }
 
-int door_drv_open(void)
+void door_drv_open(void)
 {
-        int ret=0;
-        ret = wiringPiSetup();
-        if(ret == 1)
-                printf("failed : door_drv_open\n");
-        else
-        {
-                printf("success : door_drv_open\n");
-                softPwmCreate(SERVO, 0, 200);
-                door_ctl(CLOSE);
-        }
- 
+        if(wiringPiSetup() == 1)
+	{
+		printf("failed : door_drv_open\n");
+		exit(-1);
+	}
+	softPwmCreate(SERVO, 0, 200);
 }
 
 //--------------------------
-
-
-
-
 #define PIEZO_NODE_NAME         "mod_piezo"
-
-
 
 #define SIG_CALLBACK 44
 #define NODE_NAME "/dev/mod_sw_drv"
@@ -79,7 +68,10 @@ void piezo_on(void)
 {
 	fd_piezo = open(NODE_NAME2, O_RDWR);
 	if(fd_piezo < 0)
+	{
 		printf("piezo open failed\n");
+		exit(-1);
+	}
 }
 
 void piezo_off()
@@ -99,9 +91,6 @@ void alert_sound()
 		write(fd_piezo, &alert_data, sizeof(alert_data));
 		usleep(10*1000);
 	}
-
-	//	  alert_data = 0;
-	//     write(fd_piezo, &alert_data, sizeof(alert_data));
 	piezo_off();
 }
 
@@ -116,8 +105,6 @@ static void (*g_pfn_callback)(int);
 void __attribute__((constructor)) init_callback(void)
 {       
 	fd = open(NODE_NAME, O_WRONLY);
-	//fd2 = open(NODE_NAME2, O_WRONLY);
-	//piezo_on();
 }
 void __attribute__((destructor)) exit_callback(void)
 {
@@ -150,14 +137,14 @@ int set_callback(void (*pfn_callback)(int))
 	}
 	return ret;
 }
-void sw_callback(int sw){
-
-	printf("sw = %d\n", sw);
+void sw_callback(int sw)
+{
 	alert_sound();
 	person = faceRecognition(video_num);
 }
 
-int main(void) {
+int main(void)
+{
 	door_drv_open();
 	set_callback(sw_callback);
 
@@ -178,7 +165,7 @@ int main(void) {
 		else if(person == SEUNG)
 			welcome("SEUNG");
 
-		else{ // else record
+		else{
 			char video_name[30];
 			snprintf(video_name, 30, "%s%d%s", "visitor_recording", video_num, ".avi");
 			play_video(video_name);
@@ -188,11 +175,10 @@ int main(void) {
 		if(person == TAEHO || person == TOM || person == HYUNA ||
                 person == GEUNSU || person == HAEYOON || person == SEUNG)
 		{
-			printf("%d\n", person);		
 			door_ctl(OPEN);
+			usleep(1000 * 1000 * 1.5);
+			door_ctl(CLOSE);
 		}
-		usleep(200000);
-		door_ctl(CLOSE);
 		person = -1;
 	}
 	return 0;
