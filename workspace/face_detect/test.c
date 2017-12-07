@@ -118,13 +118,16 @@ int main(void) {
 		if(person == TAEHO 
 				|| person == TOM
 				|| person == HYUNA) { // if host, open door
-            welcome("Tom");
+			welcome("Tom");
 		}
 		else{ // else record
-            unwelcome();
-            record_video(video_num++);
+			record_video(video_num++);
 			play_video("visitor_recording0.avi");
 		}
+		
+		if(person >= 0)
+			printf("%d\n", person);		
+
 		person = -1;
 	}
 	return 0;

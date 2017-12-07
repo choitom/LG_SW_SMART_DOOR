@@ -20,12 +20,6 @@ static void voice_command(const char *words)
     system(say);
 }
 
-void unwelcome()
-{
-    char str[10] = "Sorry";
-    voice_command(str);
-}
-
 void welcome(const char *name)
 {
     char str[30] = "Hi ";

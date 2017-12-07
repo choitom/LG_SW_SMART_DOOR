@@ -57,14 +57,13 @@ int faceRecognition()
 			break; 
 		}
 	}
-    destroyWindow("OpenCV Face Detect");
+    	destroyWindow("OpenCV Face Detect");
 	cap.release();
 	for(vector<int>::iterator it = results.begin(); it != results.end(); ++it) {
 		vot[*it]++;
 	}
 	int idx = -1;
 	for(int i = 0; i < 10; ++i) {
-		//cout << "result: " << result << "\t vot[" << i << "]: " << vot[i] << endl;
 		if (i == CHEON) break; // magic parameter
 
 		if (result < vot[i]) {
@@ -72,7 +71,6 @@ int faceRecognition()
 			idx = i;
 		}
 	}
-	//cout << "idx: " << idx << endl;
 	return idx;
 }
 
