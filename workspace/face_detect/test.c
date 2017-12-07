@@ -56,7 +56,7 @@ void alert_sound()
 
 
 
-static int video_num = 0;
+int video_num = 0;
 // drv jog here
 int set_callback(void (*pfn_callback)(int));
 int fd;
@@ -103,10 +103,8 @@ void sw_callback(int sw){
 
 	printf("sw = %d\n", sw);
 	alert_sound();
-	person = faceRecognition();
-	printf("end alert_sount\n");
+	person = faceRecognition(video_num);
 }
-
 
 int main(void) {
 	set_callback(sw_callback);
@@ -115,14 +113,24 @@ int main(void) {
 		// if person is not defined
 		if(person < 0) continue;
 
-		if(person == TAEHO 
-				|| person == TOM
-				|| person == HYUNA) { // if host, open door
-			welcome("Tom");
-		}
+		if(person == TAEHO)
+			welcome("TAEHO");
+		else if(person == TOM)
+			welcome("TOM");
+		else if(person == HYUNA)
+			welcome("HYUNA");
+		else if(person == GEUNSU)
+			welcome("GEUNSU");
+		else if(person == HAEYOON)
+			welcome("HAEYOON");
+		else if(person == SEUNG)
+			welcome("SEUNG");
+
 		else{ // else record
-			record_video(video_num++);
-			play_video("visitor_recording0.avi");
+			char video_name[30];
+			snprintf(video_name, 30, "%s%d%s", "visitor_recording", video_num, ".avi");
+			play_video(video_name);
+			video_num++;
 		}
 		
 		if(person >= 0)

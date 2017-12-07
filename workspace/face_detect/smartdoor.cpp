@@ -16,10 +16,7 @@ int im_height = 64;
 // Create a FaceRecognizer and train it on the given images:
 Ptr<FaceRecognizer> model = createFisherFaceRecognizer();
 
-// Video buffer
-//vector<Mat> buf(300);
-
-int faceRecognition()
+int faceRecognition(int video_num)
 {
 	int result = -1000;
 	vector<int> results;
@@ -46,9 +43,20 @@ int faceRecognition()
 	Mat frame;
 	int count = 0;
 
-	//for(vector<Mat>::iterator it = buf.begin(); it != buf.end(); ++it) {
+	ostringstream ss;
+	ss << video_num;
+	string video_title = "visitor_recording" + ss.str() + ".avi";
+	
+	Size size = Size(cap.get(CAP_PROP_FRAME_WIDTH), cap.get(CAP_PROP_FRAME_HEIGHT));
+	int fps = cap.get(CAP_PROP_FPS);
+	
+	VideoWriter vout;
+	vout.open(video_title, VideoWriter::fourcc('M','J','P','G'), fps, size, true);
+	
 	while (true) {
 		cap >> frame;
+		vout << frame;		
+
 		vector<int> temp_out;
 		detectAndDisplay(frame, face_cascade, temp_out);
 		results.insert(results.end(), temp_out.begin(), temp_out.end());
@@ -57,8 +65,8 @@ int faceRecognition()
 			break; 
 		}
 	}
-    	destroyWindow("OpenCV Face Detect");
-	cap.release();
+	destroyWindow("OpenCV Face Detect");
+
 	for(vector<int>::iterator it = results.begin(); it != results.end(); ++it) {
 		vot[*it]++;
 	}
@@ -71,6 +79,24 @@ int faceRecognition()
 			idx = i;
 		}
 	}
+
+	switch(idx){
+	case TAEHO:
+	case HYUNA:
+	case TOM:
+		break;
+
+	// stranger -> record the rest of the frames
+	default:
+		while(count < 300) {
+			cap >> frame;
+			vout << frame;
+			count++;
+		}
+		vout.release();
+	}
+	cap.release();
+	
 	return idx;
 }
 
@@ -86,7 +112,6 @@ void detectAndDisplay(Mat &frame, CascadeClassifier &face_cascade, vector<int> &
 	face_cascade.detectMultiScale(frame_gray, faces, 1.1, 2, 0 | CV_HAAR_SCALE_IMAGE, Size(30, 30));
 
 	for (size_t i = 0; i < faces.size(); i++) {
-		// Process face by face:
 		Rect face_i = faces[i];
 		// Crop the face from the image. So simple with OpenCV C++:
 		Mat face = frame_gray(face_i);
@@ -142,42 +167,6 @@ static void read_csv(const string& filename, vector<Mat>& images, vector<int>& l
 			cout << path << endl;
 		}
 	}
-}
-
-void record_video(int video_num){
-	ostringstream ss;
-    ss << video_num;
-    string video_title = "visitor_recording" + ss.str() + ".avi";
-    
-    VideoCapture cap(0);
-    if (!cap.isOpened()){
-		cout << "Error opening camera" << endl;
-		return;
-	}
-	cap.set(CAP_PROP_FRAME_WIDTH, 640);
-	cap.set(CAP_PROP_FRAME_HEIGHT, 480);
-
-	Mat frame;
-
-	Size size = Size(cap.get(CAP_PROP_FRAME_WIDTH), cap.get(CAP_PROP_FRAME_HEIGHT));
-	int fps = cap.get(CAP_PROP_FPS);
-
-	VideoWriter vout;
-	vout.open(video_title, VideoWriter::fourcc('M','J','P','G'), fps, size, true);
-
-	int frames = 0;
-	int frame_cap = 10 * fps;
-
-	while(frames < frame_cap){
-		cap >> frame;
-		vout << frame;
-		if(frames > frame_cap)
-			break;
-		frames++;
-    }
-	cap.release();
-	vout.release();
-    cout << "Title: " << video_title << endl;
 }
 
 void play_video(const char* title){

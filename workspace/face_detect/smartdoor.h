@@ -10,8 +10,7 @@ extern "C" {
 //#endif
 #include <vector>
 
-extern int faceRecognition();
-extern void record_video(int num);
+extern int faceRecognition(int video_num);
 extern void play_video(const char *title);
 extern void  
 detectAndDisplay(cv::Mat &frame, 
