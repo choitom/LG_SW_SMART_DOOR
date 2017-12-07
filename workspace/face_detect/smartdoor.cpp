@@ -79,6 +79,7 @@ int faceRecognition(int video_num)
 			idx = i;
 		}
 	}
+	if (result < 3) idx = 10;
 
 	switch(idx){
 	case TAEHO:

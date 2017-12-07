@@ -17,8 +17,8 @@
 #include <softPwm.h>
 
 #define SERVO 8
-#define OPEN 1
-#define CLOSE 2
+#define OPEN 2  //#define OPEN 1
+#define CLOSE 1 //#define CLOSE 2
 
 void door_ctl(int cmd)
 {
@@ -49,6 +49,7 @@ void door_drv_open(void)
 		printf("failed : door_drv_open\n");
 		exit(-1);
 	}
+	door_ctl(CLOSE);
 	softPwmCreate(SERVO, 0, 200);
 }
 
@@ -156,14 +157,14 @@ int main(void)
 			welcome("TAEHO");
 		else if(person == TOM)
 			welcome("TOM");
-		else if(person == HYUNA)
-			welcome("HYUNA");
-		else if(person == GEUNSU)
-			welcome("GEUNSU");
-		else if(person == HAEYOON)
-			welcome("HAEYOON");
-		else if(person == SEUNG)
-			welcome("SEUNG");
+		//else if(person == HYUNA)
+		//	welcome("HYUNA");
+		//else if(person == GEUNSU)
+		//	welcome("GEUNSU");
+		//else if(person == HAEYOON)
+		//	welcome("HAEYOON");
+		//else if(person == SEUNG)
+		//	welcome("SEUNG");
 
 		else{
 			char video_name[30];
@@ -172,9 +173,11 @@ int main(void)
 			video_num++;
 		}
 
-		if(person == TAEHO || person == TOM || person == HYUNA ||
-                person == GEUNSU || person == HAEYOON || person == SEUNG)
-		{
+		//if(person == TAEHO || person == TOM || person == HYUNA ||
+        //        person == GEUNSU || person == HAEYOON || person == SEUNG)
+		if(person == TAEHO || person == TOM)
+        {
+			printf("Person: %d\n", person);
 			door_ctl(OPEN);
 			usleep(1000 * 1000 * 1.5);
 			door_ctl(CLOSE);
