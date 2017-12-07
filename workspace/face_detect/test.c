@@ -11,6 +11,56 @@
 #include "people.h" 
 #include "speaker.h"
 
+
+//---- servo motor ---- //
+#include <wiringPi.h>
+#include <softPwm.h>
+
+#define SERVO 8
+#define OPEN 1
+#define CLOSE 2
+
+int door_drv_open(void)
+{
+        int ret=0;
+        ret = wiringPiSetup();
+        if(ret == 1)
+                printf("failed : door_drv_open\n");
+        else
+        {
+                printf("success : door_drv_open\n");
+                softPwmCreate(SERVO, 0, 200);
+                door_ctl(CLOSE);
+        }
+ 
+}
+
+void door_ctl(int cmd)
+{
+        switch(cmd)
+        {
+case : OPEN
+       printf("open the door\n");
+       softPwmWrite(SERVO, 24);
+       usleep(200000);
+       softPwmWrite(SERVO, 0);
+       break;
+case : CLOSE
+       printf("close the door\n");
+       softPwmWrite(SERVO, 5);
+       usleep(200000);
+       softPwmWrite(SERVO, 0);
+       break;
+case : default
+       printf("undefined door cmd\n");
+       break;
+        }
+}
+//--------------------------
+
+
+
+
 #define PIEZO_NODE_NAME         "mod_piezo"
 
 
