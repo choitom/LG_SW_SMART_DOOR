@@ -20,6 +20,28 @@
 #define OPEN 1
 #define CLOSE 2
 
+void door_ctl(int cmd)
+{
+	switch(cmd)
+	{
+		case OPEN:
+			printf("open the door\n");
+			softPwmWrite(SERVO, 24);
+			usleep(200000);
+			softPwmWrite(SERVO, 0);
+			break;
+		case CLOSE:
+			printf("close the door\n");
+			softPwmWrite(SERVO, 5);
+			usleep(200000);
+			softPwmWrite(SERVO, 0);
+			break;
+		default:
+			printf("undefined door cmd\n");
+			break;
+	}
+}
+
 int door_drv_open(void)
 {
         int ret=0;
@@ -35,27 +57,6 @@ int door_drv_open(void)
  
 }
 
-void door_ctl(int cmd)
-{
-        switch(cmd)
-        {
-case : OPEN
-       printf("open the door\n");
-       softPwmWrite(SERVO, 24);
-       usleep(200000);
-       softPwmWrite(SERVO, 0);
-       break;
-case : CLOSE
-       printf("close the door\n");
-       softPwmWrite(SERVO, 5);
-       usleep(200000);
-       softPwmWrite(SERVO, 0);
-       break;
-case : default
-       printf("undefined door cmd\n");
-       break;
-        }
-}
 //--------------------------
 
 
@@ -157,6 +158,7 @@ void sw_callback(int sw){
 }
 
 int main(void) {
+	door_drv_open();
 	set_callback(sw_callback);
 
 	while(1){
@@ -182,10 +184,14 @@ int main(void) {
 			play_video(video_name);
 			video_num++;
 		}
-		
-		if(person >= 0)
-			printf("%d\n", person);		
 
+		if(person >= 0)
+		{
+			printf("%d\n", person);		
+			door_ctl(OPEN);
+		}
+		usleep(200000);
+		door_ctl(CLOSE);
 		person = -1;
 	}
 	return 0;
