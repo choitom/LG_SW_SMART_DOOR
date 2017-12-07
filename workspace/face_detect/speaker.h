@@ -22,10 +22,12 @@ static void voice_command(const char *words)
 
 void welcome(const char *name)
 {
-    char str[30] = "Hi ";
-    strcat(str, name);
-    strcat(str, ", the door's opening");
-    voice_command(str);
+    //char str[30] = "Hi ";
+    //strcat(str, name);
+    //strcat(str, ", the door's opening");
+	//printf("%s\n", str);
+
+    voice_command("Welcome home, the door is opening");
 }
 
 #endif

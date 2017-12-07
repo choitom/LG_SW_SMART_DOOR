@@ -17,8 +17,8 @@
 #include <softPwm.h>
 
 #define SERVO 8
-#define OPEN 2  //#define OPEN 1
-#define CLOSE 1 //#define CLOSE 2
+#define OPEN 1
+#define CLOSE 2
 
 void door_ctl(int cmd)
 {
@@ -26,14 +26,14 @@ void door_ctl(int cmd)
 	{
 		case OPEN:
 			//printf("open the door\n");
-			softPwmWrite(SERVO, 24);
+			softPwmWrite(SERVO, 5);
 			usleep(200000);
 			softPwmWrite(SERVO, 0);
 			break;
 		case CLOSE:
 			//printf("close the door\n");
-			softPwmWrite(SERVO, 5);
-			usleep(200000);
+			softPwmWrite(SERVO, 24);
+			usleep(400000);
 			softPwmWrite(SERVO, 0);
 			break;
 		default:
@@ -179,7 +179,7 @@ int main(void)
         {
 			printf("Person: %d\n", person);
 			door_ctl(OPEN);
-			usleep(1000 * 1000 * 1.5);
+			usleep(1000 * 1000 * 2.5);
 			door_ctl(CLOSE);
 		}
 		person = -1;
