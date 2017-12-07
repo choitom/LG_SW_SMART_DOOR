@@ -27,11 +27,10 @@ void door_ctl(int cmd)
 		case OPEN:
 			//printf("open the door\n");
 			softPwmWrite(SERVO, 5);
-			usleep(200000);
-			softPwmWrite(SERVO, 0);
+			//usleep(300000);
+			//softPwmWrite(SERVO, 0);
 			break;
 		case CLOSE:
-			//printf("close the door\n");
 			softPwmWrite(SERVO, 24);
 			usleep(400000);
 			softPwmWrite(SERVO, 0);
@@ -44,7 +43,7 @@ void door_ctl(int cmd)
 
 void door_drv_open(void)
 {
-        if(wiringPiSetup() == 1)
+	if(wiringPiSetup() == 1)
 	{
 		printf("failed : door_drv_open\n");
 		exit(-1);
@@ -174,13 +173,14 @@ int main(void)
 		}
 
 		//if(person == TAEHO || person == TOM || person == HYUNA ||
-        //        person == GEUNSU || person == HAEYOON || person == SEUNG)
+		//        person == GEUNSU || person == HAEYOON || person == SEUNG)
 		if(person == TAEHO || person == TOM)
-        {
+		{
 			printf("Person: %d\n", person);
 			door_ctl(OPEN);
 			usleep(1000 * 1000 * 2.5);
 			door_ctl(CLOSE);
+
 		}
 		person = -1;
 	}

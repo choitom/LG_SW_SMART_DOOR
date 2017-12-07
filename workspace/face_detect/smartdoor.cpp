@@ -83,11 +83,11 @@ int faceRecognition(int video_num)
 
 	switch(idx){
 	case TAEHO:
-	case HYUNA:
+	//case HYUNA:
 	case TOM:
-    case GEUNSU:
-    case SEUNG:
-    case HAEYOON:
+    //case GEUNSU:
+    //case SEUNG:
+    //case HAEYOON:
         break;
 
 	// stranger -> record the rest of the frames
