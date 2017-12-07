@@ -84,7 +84,10 @@ int faceRecognition(int video_num)
 	case TAEHO:
 	case HYUNA:
 	case TOM:
-		break;
+    case GEUNSU:
+    case SEUNG:
+    case HAEYOON:
+        break;
 
 	// stranger -> record the rest of the frames
 	default:

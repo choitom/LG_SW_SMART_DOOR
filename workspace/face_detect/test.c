@@ -185,7 +185,8 @@ int main(void) {
 			video_num++;
 		}
 
-		if(person >= 0)
+		if(person == TAEHO || person == TOM || person == HYUNA ||
+                person == GEUNSU || person == HAEYOON || person == SEUNG)
 		{
 			printf("%d\n", person);		
 			door_ctl(OPEN);
